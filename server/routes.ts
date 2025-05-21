@@ -85,13 +85,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         # Response Format
         - Begin by asking 2-3 specific questions about the prompt request
         - After user answers, create a well-formatted prompt using the guidelines from the prompting guide
-        - Format prompts in code blocks using markdown triple backticks
-        - Explain your reasoning after the prompt
+        - Format prompts ONLY in code blocks using markdown triple backticks
+        - DO NOT include any explanation or reasoning after the prompt - just ask if the user wants any changes
         
         # Important
         - Be helpful and informative
         - Always ask clarifying questions first rather than immediately generating a prompt
-        - If the user's request is unclear or lacks context, always ask for more details`
+        - If the user's request is unclear or lacks context, always ask for more details
+        - If user asks for changes to a prompt, ONLY modify the requested parts while keeping everything else intact
+        - Keep your explanations brief and your prompts clean and well-structured`
       };
       
       // Fix user/assistant role in the first message if needed
