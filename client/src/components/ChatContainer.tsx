@@ -91,10 +91,17 @@ export default function ChatContainer({
               {message.role === 'user' ? (
                 <p>{message.content}</p>
               ) : (
-                <div className="prose prose-invert prose-sm max-w-none">
+                <div className="relative prose prose-invert prose-sm max-w-none">
                   <ReactMarkdown>
                     {message.content}
                   </ReactMarkdown>
+                  <button 
+                    onClick={() => navigator.clipboard.writeText(message.content)}
+                    className="absolute top-0 right-0 text-neutral-500 hover:text-emerald-400 p-1 rounded-full transition-colors"
+                    title="Copy this prompt"
+                  >
+                    <i className="fas fa-copy"></i>
+                  </button>
                 </div>
               )}
             </div>
