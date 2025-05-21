@@ -1,0 +1,28 @@
+{
+  "name": "prompt-me",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm:dev-client\" \"npm:dev-server\"",
+    "dev-client": "vite",
+    "dev-server": "nodemon server.js",
+    "build": "vite build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.0.0",
+    "concurrently": "^8.0.0",
+    "dotenv": "^16.3.0",
+    "express": "^4.19.0",
+    "node-fetch": "^3.5.3",
+    "openai": "^4.37.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.15",
+    "nodemon": "^3.0.3",
+    "postcss": "^8.4.30",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.2.0"
+  }
+}
