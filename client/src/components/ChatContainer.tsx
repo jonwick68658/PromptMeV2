@@ -150,7 +150,7 @@ export default function ChatContainer({
           
           <div className="flex justify-between items-center">
             <div className="text-xs text-neutral-500">
-              <span>Using GPT-o3-2025-04-16</span>
+              <span>Using GPT-4o</span>
             </div>
             <div className="flex items-center space-x-2">
               <button 

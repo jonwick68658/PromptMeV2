@@ -66,7 +66,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Add developer message with prompting guide
       const devMessage = { role: "developer", content: promptingGuide };
       const payload = {
-        model: "gpt-o3-2025-04-16",
+        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
         messages: [devMessage, ...messages].slice(-30), // Keep context trimmed
       };
       
