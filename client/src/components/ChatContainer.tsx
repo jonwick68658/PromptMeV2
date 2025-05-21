@@ -68,7 +68,7 @@ export default function ChatContainer({
           </h3>
         </div>
         <div className="mt-2 text-xs text-neutral-400 overflow-hidden max-h-14 line-clamp-2">
-          <p>Elite-quality prompt templates for both GPT "doers" and o‑series "planners". Includes templates for GPT-4.1 Chat, GPT-4.1 Response, and o-Series Response.</p>
+          <p>Be as specific as possible with your request and I will return the perfect prompt saving you a ton of time!</p>
         </div>
       </div>
       
