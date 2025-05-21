@@ -89,7 +89,7 @@ export default function ChatContainer({
               {message.role === 'user' ? (
                 <p>{message.content}</p>
               ) : (
-                <div className="relative prose prose-invert prose-sm max-w-none">
+                <div className="relative prose prose-invert prose-sm max-w-none pr-8">
                   <ReactMarkdown>
                     {message.content}
                   </ReactMarkdown>
