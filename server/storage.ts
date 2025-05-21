@@ -1,19 +1,6 @@
-import { users, type User, type InsertUser, type Email, type InsertEmail } from "@shared/schema";
-import Database from "better-sqlite3";
-import fs from "fs";
-
-// Create SQLite database if it doesn't exist
-if (!fs.existsSync("./emails.db")) {
-  const db = new Database("emails.db");
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS emails(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT UNIQUE NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-  db.close();
-}
+import { users, emails, type User, type InsertUser, type Email, type InsertEmail } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -25,31 +12,34 @@ export interface IStorage {
   getEmails(): Promise<Email[]>;
 }
 
-export class SqliteStorage implements IStorage {
-  private db: Database.Database;
-  
-  constructor() {
-    this.db = new Database("emails.db");
-  }
-  
+export class DatabaseStorage implements IStorage {
   // User methods (needed for the interface but not actively used in this app)
   async getUser(id: number): Promise<User | undefined> {
-    return undefined;
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return undefined;
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = 1; // Placeholder
-    return { ...insertUser, id };
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
   }
   
   // Email methods
   async storeEmail(email: string): Promise<boolean> {
     try {
-      this.db.prepare("INSERT OR IGNORE INTO emails(email) VALUES (?)").run(email);
+      await db
+        .insert(emails)
+        .values({ email })
+        .onConflictDoNothing()
+        .returning();
       return true;
     } catch (error) {
       console.error("Error storing email:", error);
@@ -59,8 +49,10 @@ export class SqliteStorage implements IStorage {
   
   async getEmails(): Promise<Email[]> {
     try {
-      const stmt = this.db.prepare("SELECT * FROM emails ORDER BY created_at DESC");
-      return stmt.all() as Email[];
+      return await db
+        .select()
+        .from(emails)
+        .orderBy(emails.createdAt);
     } catch (error) {
       console.error("Error getting emails:", error);
       return [];
@@ -68,4 +60,4 @@ export class SqliteStorage implements IStorage {
   }
 }
 
-export const storage = new SqliteStorage();
+export const storage = new DatabaseStorage();
