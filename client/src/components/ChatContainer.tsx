@@ -64,12 +64,8 @@ export default function ChatContainer({
         <div className="flex items-center justify-between">
           <h3 className="font-medium flex items-center">
             <i className="fas fa-book text-emerald-500 mr-2"></i>
-            <span>Prompting Guide</span>
+            <span className="text-white">Prompting Guide</span>
           </h3>
-          <div className="px-2 py-1 bg-neutral-700 rounded text-xs text-emerald-300 hover:bg-neutral-600 cursor-pointer">
-            <i className="fas fa-expand-alt mr-1"></i>
-            <span>Expand</span>
-          </div>
         </div>
         <div className="mt-2 text-xs text-neutral-400 overflow-hidden max-h-14 line-clamp-2">
           <p>Elite-quality prompt templates for both GPT "doers" and o‑series "planners". Includes templates for GPT-4.1 Chat, GPT-4.1 Response, and o-Series Response.</p>

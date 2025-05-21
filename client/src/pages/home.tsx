@@ -13,7 +13,7 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi there! I'll help you craft the perfect prompts for GPT and o-Series models based on our prompting guide. What would you like to create today?"
+      content: "Hi there! I'll help you craft the perfect prompts for GPT and o-Series models based the most updated prompting guide.\nTell me what you want and I will build you a perfect prompt for it."
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +88,7 @@ export default function Home() {
     setMessages([
       {
         role: 'assistant',
-        content: "Hi there! I'll help you craft the perfect prompts for GPT and o-Series models based on our prompting guide. What would you like to create today?"
+        content: "Hi there! I'll help you craft the perfect prompts for GPT and o-Series models based the most updated prompting guide.\nTell me what you want and I will build you a perfect prompt for it."
       }
     ]);
   };
