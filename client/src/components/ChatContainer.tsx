@@ -66,10 +66,10 @@ export default function ChatContainer({
             <i className="fas fa-book text-emerald-500 mr-2"></i>
             <span>Prompting Guide</span>
           </h3>
-          <button className="text-xs text-neutral-400 hover:text-white">
+          <div className="px-2 py-1 bg-neutral-700 rounded text-xs text-emerald-300 hover:bg-neutral-600 cursor-pointer">
             <i className="fas fa-expand-alt mr-1"></i>
             <span>Expand</span>
-          </button>
+          </div>
         </div>
         <div className="mt-2 text-xs text-neutral-400 overflow-hidden max-h-14 line-clamp-2">
           <p>Elite-quality prompt templates for both GPT "doers" and o‑series "planners". Includes templates for GPT-4.1 Chat, GPT-4.1 Response, and o-Series Response.</p>
@@ -112,7 +112,7 @@ export default function ChatContainer({
                         description: "The prompt has been copied to your clipboard.",
                       });
                     }}
-                    className="absolute top-0 right-0 text-neutral-500 hover:text-emerald-400 p-1 rounded-full transition-colors"
+                    className="absolute top-1 right-1 bg-emerald-700 text-white hover:bg-emerald-600 p-2 rounded-md transition-colors shadow-md"
                     title="Copy this prompt"
                   >
                     <i className="fas fa-copy"></i>
@@ -164,24 +164,21 @@ export default function ChatContainer({
           </div>
           
           <div className="flex justify-between items-center">
-            <div className="text-xs text-neutral-500">
-              <span>Using o3-2025-04-16</span>
-            </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <button 
                 type="button" 
-                className="text-xs text-emerald-500 hover:text-emerald-400 flex items-center"
+                className="px-3 py-1.5 bg-emerald-700 text-white rounded-md text-xs hover:bg-emerald-600 flex items-center shadow-sm"
                 onClick={onCopyPrompt}
               >
-                <i className="fas fa-clipboard mr-1"></i>
+                <i className="fas fa-clipboard mr-1.5"></i>
                 <span>Copy Last Prompt</span>
               </button>
               <button 
                 type="button" 
-                className="text-xs text-neutral-400 hover:text-white flex items-center"
+                className="px-3 py-1.5 bg-neutral-700 text-neutral-300 rounded-md text-xs hover:bg-neutral-600 flex items-center shadow-sm"
                 onClick={onClearChat}
               >
-                <i className="fas fa-trash-alt mr-1"></i>
+                <i className="fas fa-trash-alt mr-1.5"></i>
                 <span>Clear Chat</span>
               </button>
             </div>
