@@ -9,9 +9,6 @@ export default function Header() {
           <span className="text-xs ml-1 text-emerald-300 font-normal">v2</span>
         </h1>
       </div>
-      <div className="px-3 py-1 bg-emerald-800 rounded-md text-xs text-emerald-100">
-        Using o3-2025-04-16
-      </div>
     </header>
   );
 }

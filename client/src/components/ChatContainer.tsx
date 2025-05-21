@@ -108,7 +108,7 @@ export default function ChatContainer({
                         description: "The prompt has been copied to your clipboard.",
                       });
                     }}
-                    className="absolute top-1 right-1 bg-emerald-700 text-white hover:bg-emerald-600 p-2 rounded-md transition-colors shadow-md"
+                    className="absolute top-1 right-1 bg-emerald-700 text-white hover:bg-emerald-600 p-1.5 rounded-md transition-colors shadow-md z-10"
                     title="Copy this prompt"
                   >
                     <i className="fas fa-copy"></i>
