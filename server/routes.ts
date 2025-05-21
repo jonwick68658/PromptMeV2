@@ -65,9 +65,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Add developer message with prompting guide
       const devMessage = { role: "developer", content: promptingGuide };
+      
+      // Fix user/assistant role in the first message if needed
+      const fixedMessages = messages.map((msg, index) => {
+        // If this is the first message and it's from assistant, change to user
+        if (index === 0 && msg.role === 'assistant') {
+          return { ...msg, role: 'user' };
+        }
+        return msg;
+      });
+      
       const payload = {
         model: "o3-2025-04-16", 
-        messages: [devMessage, ...messages].slice(-30), // Keep context trimmed
+        messages: [devMessage, ...fixedMessages].slice(-30), // Keep context trimmed
       };
       
       // Call OpenAI API

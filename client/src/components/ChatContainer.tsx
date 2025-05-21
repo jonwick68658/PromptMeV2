@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Message } from '@shared/schema';
+import { useToast } from '@/hooks/use-toast';
 
 interface ChatContainerProps {
   messages: Message[];
@@ -20,6 +21,7 @@ export default function ChatContainer({
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { toast } = useToast();
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -96,7 +98,20 @@ export default function ChatContainer({
                     {message.content}
                   </ReactMarkdown>
                   <button 
-                    onClick={() => navigator.clipboard.writeText(message.content)}
+                    onClick={() => {
+                      // Extract just the prompt from code blocks if they exist
+                      let responseText = message.content;
+                      // Find content between code blocks if it exists
+                      const codeBlockMatch = message.content.match(/```(?:text|json)?\s*([\s\S]*?)```/);
+                      if (codeBlockMatch && codeBlockMatch[1]) {
+                        responseText = codeBlockMatch[1].trim();
+                      }
+                      navigator.clipboard.writeText(responseText);
+                      toast({
+                        title: "Prompt copied!",
+                        description: "The prompt has been copied to your clipboard.",
+                      });
+                    }}
                     className="absolute top-0 right-0 text-neutral-500 hover:text-emerald-400 p-1 rounded-full transition-colors"
                     title="Copy this prompt"
                   >
