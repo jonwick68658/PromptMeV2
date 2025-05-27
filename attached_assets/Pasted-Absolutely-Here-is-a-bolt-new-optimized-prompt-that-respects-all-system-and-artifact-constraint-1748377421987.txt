@@ -1,0 +1,74 @@
+Absolutely! Here is a **bolt.new-optimized prompt** that respects all system and artifact constraints. This will work perfectly with bolt.new, Supabase, and the WebContainer’s limitations:
+
+---
+
+**bolt.new-optimized prompt:**
+
+---
+
+**You are Bolt, an expert full-stack engineer. Build a modern, production-ready prompt-generation chat web application in TypeScript, React, Vite, and TailwindCSS, fully compatible with the bolt.new WebContainer.**
+
+**Requirements:**
+
+1. **Authentication:**
+
+   * Use Supabase Auth (email/password only; no magic links, no OAuth, no custom tables).
+   * Only use `@supabase/supabase-js` for all authentication and database access.
+
+2. **Database:**
+
+   * Use Supabase as the only database.
+   * Persist all chat messages with user linkage.
+   * All database changes must be delivered as a new migration file with a markdown summary, RLS enabled, and proper policies as per bolt.new requirements.
+
+3. **UI:**
+
+   * Glossy black, high-contrast chat UI (bubbles, input at bottom, streaming AI responses).
+   * Fully responsive for web and mobile.
+   * Show prior conversation history from Supabase.
+
+4. **Prompt Engine:**
+
+   * Send user messages to OpenAI GPT-4o using the OpenAI API.
+   * Stream the responses in real-time to the UI.
+
+5. **Error Handling & Security:**
+
+   * Sanitize all user input.
+   * Handle and display errors gracefully.
+   * Store all secrets and Supabase credentials in `.env`.
+
+6. **Tooling:**
+
+   * Use Vite, React, TypeScript, TailwindCSS, ESLint, Prettier.
+   * Include all config files.
+   * All code must be fully self-contained with all required files, no partials, no diffs.
+
+7. **Testing:**
+
+   * Add unit tests for Supabase API interaction and main components using Jest and Testing Library.
+
+8. **Project Output:**
+
+   * Output the entire project as a single artifact following bolt.new conventions:
+
+     * All shell commands to run.
+     * All files (with full content).
+     * Supabase migration with markdown summary, RLS, and policies.
+   * Use only npm packages that are pure JS/TS (no native bindings).
+
+9. **No Docker, no docker-compose, no native binaries, no Git, no custom shell scripts.**
+
+10. **Instructions:**
+
+    * Include a clear setup and run guide at the top of the artifact.
+    * All dependencies must be specified in `package.json`.
+    * Use environment variables for all secrets.
+
+---
+
+**Output ONLY the artifact, as per bolt.new conventions, with all necessary files and steps. Do not provide explanations.**
+
+---
+
+Let me know if you want this slightly reworded, or if you want it targeted to a specific use case or theme!

@@ -98,23 +98,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (platformTemplate) {
           platformContext = `
           
-# Platform-Specific Context for ${platformTemplate.name}
-You are creating prompts specifically for ${platformTemplate.name}. Use this platform information as context:
+# Platform-Specific Instructions for ${platformTemplate.name}
 
-## Platform Description
-${platformTemplate.description}
+You are creating prompts specifically for ${platformTemplate.name}. Study this platform's complete system prompt to understand its exact capabilities, constraints, and expected format:
 
-## Platform System Prompt Style
-${platformTemplate.systemPrompt.substring(0, 1000)}...
+## Complete Platform System Prompt
+${platformTemplate.systemPrompt}
 
-## Platform Tools/Capabilities
-${platformTemplate.tools ? JSON.stringify(platformTemplate.tools, null, 2).substring(0, 500) + '...' : 'No specific tools defined'}
+${platformTemplate.tools ? `## Platform Tools/Capabilities
+${JSON.stringify(platformTemplate.tools, null, 2)}` : ''}
 
-When generating prompts, ensure they match this platform's:
-- Communication style and terminology
+## Your Task
+Generate prompts that perfectly match this platform's:
+- Exact communication style and terminology
+- Specific constraints and limitations
+- Required output format and structure
 - Available tools and capabilities
-- Expected prompt format and structure
-- Best practices specific to this platform`;
+- Best practices and conventions
+
+The generated prompt should read like it was written by someone deeply familiar with ${platformTemplate.name}'s specific requirements and capabilities.`;
         }
       }
       
