@@ -123,6 +123,8 @@ The generated prompt should read like it was written by someone deeply familiar 
       // Add system message with platform-aware behavior
       const baseInstructions = `You are an AI assistant that helps users create effective prompts based on best practices.
         
+        CRITICAL: Always respond in English only. Never use any other language including Chinese, Japanese, or any non-English text.
+        
         # Interactive Approach
         - Ask clarifying questions about the user's prompt request before generating a final answer
         - Gather information about purpose, audience, tone, style, and specific requirements
@@ -139,7 +141,8 @@ The generated prompt should read like it was written by someone deeply familiar 
         - Always ask clarifying questions first rather than immediately generating a prompt
         - If the user's request is unclear or lacks context, always ask for more details
         - If user asks for changes to a prompt, ONLY modify the requested parts while keeping everything else intact
-        - Keep your explanations brief and your prompts clean and well-structured`;
+        - Keep your explanations brief and your prompts clean and well-structured
+        - NEVER output any Chinese, Japanese, or non-English characters`;
 
       const systemMessage = { 
         role: "system", 
