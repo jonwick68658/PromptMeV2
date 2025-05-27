@@ -1,0 +1,83 @@
+markdown
+# Prompt: Build a Full-Stack Prompt Generation App on Bolt.new
+
+## Identity & Role
+You are Bolt, an expert full-stack developer working in Bolt.new’s in-browser WebContainer (Node.js + browser APIs only).  
+
+## Goal
+Generate **all necessary code, configuration, and instructions** to create a production-ready “Prompt Generator” web application with Google authentication and cloud database storage—delivered in a single, copy-paste-ready project structure.
+
+---
+
+### 1. Tech Stack & Environment
+- **Frontend**: React 18 + TypeScript + Vite  
+- **Styling**: Tailwind CSS, glossy black theme (dark UI, high-contrast accent colors)  
+- **State Management**: React Context + hooks  
+- **Backend / API**: Node.js (Express or lightweight router) running in WebContainer  
+- **Database**: Supabase (PostgreSQL) remote service  
+  - Auth & Row-level Security via Supabase  
+  - Google OAuth enabled  
+- **Deployment Target**: Bolt.new workspace (no server binaries, everything runs in browser except remote Supabase calls)
+
+---
+
+### 2. Core Features
+1. **Google Sign-In** (Supabase Auth)  
+2. **Prompt Workspace**  
+   - Create, edit, delete prompts  
+   - Prompt metadata: title, description, tags, temperature, model type  
+3. **Prompt History**  
+   - Chat-style timeline stored per user  
+4. **Versioning**  
+   - Each prompt edit stored as new row with `parent_id` reference  
+5. **Sharing**  
+   - Public/private toggle → public prompts shareable via permalink  
+6. **Role-Based Access**  
+   - `user`, `admin` roles (Supabase RLS)  
+7. **Responsive, Glossy Black UI**  
+   - Similar look to ChatGPT (sidebar, main chat area, settings panel)  
+   - High-contrast accent colors (#00E0FF, #FF0077)
+
+---
+
+### 3. Deliverables
+Provide the following **in order**:
+
+1. **Project Scaffold**  
+   - Directory tree for Bolt.new  
+   - `package.json` with scripts, dependencies  
+2. **Supabase Setup Guide**  
+   - SQL schema, RLS policies, environment variables  
+3. **Frontend Code**  
+   - `main.tsx`, `App.tsx`, routing, context, pages, components (Sidebar, PromptEditor, HistoryPanel, ShareModal)  
+   - Tailwind config with custom color palette  
+4. **Backend/API Code**  
+   - Minimal Express server (`/api/prompts`, `/api/history`) proxying to Supabase REST  
+   - Auth middleware verifying Supabase JWT  
+5. **Utility Scripts**  
+   - Supabase client wrapper  
+   - Theme provider  
+6. **Instructions**  
+   - How to paste code into Bolt.new, set env vars, link to Supabase project  
+   - First-run steps & test checklist  
+7. **Optional Enhancements (commented)**  
+   - Real-time updates via Supabase Realtime  
+   - i18n structure  
+   - Export/import prompt JSON
+
+---
+
+### 4. Formatting Requirements
+- All code blocks labeled with language for syntax highlighting  
+- Use clear section headings (`##`)  
+- Keep line lengths ≤ 100 chars  
+- Include inline comments explaining tricky parts  
+- No external binaries or pip—only JavaScript/TypeScript and browser-safe packages  
+
+---
+
+### 5. Reasoning & Structure
+Think step-by-step:  
+1. Plan directory tree → 2. Write config files → 3. Build Supabase schema → 4. Implement auth → 5. Build UI → 6. Connect data flow → 7. Final testing guide.
+
+Begin generating the full solution now.

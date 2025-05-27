@@ -120,10 +120,8 @@ The generated prompt should read like it was written by someone deeply familiar 
         }
       }
       
-      // Add system message to encourage interactive behavior and clarifying questions
-      const systemMessage = { 
-        role: "system", 
-        content: `You are an AI assistant that helps users create effective prompts based on best practices.
+      // Add system message with platform-aware behavior
+      const baseInstructions = `You are an AI assistant that helps users create effective prompts based on best practices.
         
         # Interactive Approach
         - Ask clarifying questions about the user's prompt request before generating a final answer
@@ -141,7 +139,26 @@ The generated prompt should read like it was written by someone deeply familiar 
         - Always ask clarifying questions first rather than immediately generating a prompt
         - If the user's request is unclear or lacks context, always ask for more details
         - If user asks for changes to a prompt, ONLY modify the requested parts while keeping everything else intact
-        - Keep your explanations brief and your prompts clean and well-structured${platformContext}`
+        - Keep your explanations brief and your prompts clean and well-structured`;
+
+      const systemMessage = { 
+        role: "system", 
+        content: platform 
+          ? `${baseInstructions}
+          
+# CRITICAL: Platform-Native Prompt Generation
+You are now acting AS IF you were ${platformTemplateService.getTemplate(platform)?.name || platform} itself when creating prompts. 
+
+When generating prompts, you must:
+- Write the prompt exactly as ${platformTemplateService.getTemplate(platform)?.name || platform} would expect it
+- Use the exact terminology, format, and style that ${platformTemplateService.getTemplate(platform)?.name || platform} uses
+- Follow ${platformTemplateService.getTemplate(platform)?.name || platform}'s specific constraints and capabilities
+- Generate prompts that would work perfectly if pasted directly into ${platformTemplateService.getTemplate(platform)?.name || platform}
+
+You are NOT creating prompts ABOUT ${platformTemplateService.getTemplate(platform)?.name || platform} - you are creating prompts FOR ${platformTemplateService.getTemplate(platform)?.name || platform}.
+
+${platformContext}`
+          : baseInstructions
       };
       
       // Fix user/assistant role in the first message if needed
