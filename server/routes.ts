@@ -31,12 +31,14 @@ try {
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize platform templates
   await platformTemplateService.loadTemplates();
+  console.log('Platform templates loaded successfully!');
 
-  // Test endpoint to verify platform templates are loaded
+  // Platform templates endpoint
   app.get("/api/platforms", async (req, res) => {
     try {
       const platforms = platformTemplateService.getPlatformNames();
-      res.json({ platforms, count: platforms.length });
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json({ platforms, count: platforms.length });
     } catch (error) {
       console.error("Error fetching platforms:", error);
       res.status(500).json({ error: "Failed to fetch platforms" });
@@ -72,8 +74,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       z.object({
         role: z.enum(["user", "assistant", "system", "developer"]),
         content: z.string(),
+        platform: z.string().optional(),
       })
     ),
+    platform: z.string().optional(),
   });
 
   app.post("/api/chat", async (req, res) => {

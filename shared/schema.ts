@@ -29,6 +29,12 @@ export const insertEmailSchema = createInsertSchema(emails).pick({
 export interface Message {
   role: 'user' | 'assistant' | 'system' | 'developer';
   content: string;
+  platform?: string; // Optional platform context for this message
+}
+
+export interface ChatRequest {
+  messages: Message[];
+  platform?: string; // Selected platform for prompt generation
 }
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
