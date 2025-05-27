@@ -1,0 +1,204 @@
+{
+  "tools": [
+    {
+      "name": "restart_workflow",
+      "description": "Restart (or start) a workflow.",
+      "parameters": {
+        "properties": {
+          "name": {
+            "description": "The name of the workflow.",
+            "type": "string"
+          }
+        },
+        "required": ["name"],
+        "type": "object"
+      }
+    },
+    {
+      "name": "search_filesystem",
+      "description": "This tools searches and opens the relevant files for a codebase",
+      "parameters": {
+        "properties": {
+          "class_names": {
+            "default": [],
+            "description": "List of specific class names to search for in the codebase. Case-sensitive and supports exact matches only. Use this to find particular class definitions or their usages.",
+            "items": {"type": "string"},
+            "type": "array"
+          },
+          "code": {
+            "default": [],
+            "description": "List of exact code snippets to search for in the codebase. Useful for finding specific implementations or patterns. Each snippet should be a complete code fragment, not just keywords.",
+            "items": {"type": "string"},
+            "type": "array"
+          },
+          "function_names": {
+            "default": [],
+            "description": "List of specific function or method names to search for. Case-sensitive and supports exact matches only. Use this to locate function definitions or their invocations throughout the code.",
+            "items": {"type": "string"},
+            "type": "array"
+          },
+          "query_description": {
+            "anyOf": [{"type": "string"}, {"type": "null"}],
+            "default": null,
+            "description": "A natural language query to perform semantic similarity search. Describe what you're looking for using plain English, e.g. 'Find error handling in database connections' or 'Locate authentication middleware implementations'."
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "packager_tool",
+      "description": "Installs the language (if needed) and installs or uninstalls a list of libraries or project dependencies. Use this tool to install dependencies instead of executing shell commands, or editing files manually. Use this tool with language_or_system=`system` to add system-dependencies instead of using `apt install`. Installing libraries for the first time also creates the necessary project files automatically (like 'package.json', 'cargo.toml', etc). This will automatically reboot all workflows.",
+      "parameters": {
+        "properties": {
+          "dependency_list": {
+            "default": [],
+            "description": "The list of system dependencies or libraries to install. System dependencies are packages (attribute paths) in the Nixpkgs package collection. Example system dependencies: ['jq', 'ffmpeg', 'imagemagick']. Libraries are packages for a particular programming language. Example libraries: ['express'], ['lodash'].",
+            "items": {"type": "string"},
+            "type": "array"
+          },
+          "install_or_uninstall": {
+            "description": "Whether to install or uninstall.",
+            "enum": ["install", "uninstall"],
+            "type": "string"
+          },
+          "language_or_system": {
+            "description": "The language for which to install/uninstall libraries, for example  'nodejs', 'bun', 'python', etc. Use `system` to install/uninstall system dependencies.",
+            "type": "string"
+          }
+        },
+        "required": ["install_or_uninstall", "language_or_system"],
+        "type": "object"
+      }
+    },
+    {
+      "name": "programming_language_install_tool",
+      "description": "If a program doesn't run, you may not have the programming language installed. Use programming_language_install_tool to install it. If you need to use python, include 'python-3.11' in programming_languages. For Python 3.10, use 'python-3.10'. If you need to use Node.js, include 'nodejs-20' in programming_languages. For Node.js 18, use 'nodejs-18'. Note, this will also install the language's package manager, so don't install it separately.",
+      "parameters": {
+        "properties": {
+          "programming_languages": {
+            "description": "IDs of the programming languages to install",
+            "items": {"type": "string"},
+            "type": "array"
+          }
+        },
+        "required": ["programming_languages"],
+        "type": "object"
+      }
+    },
+    {
+      "name": "create_postgresql_database_tool",
+      "description": "When a project requires a PostgreSQL database, you can use this tool to create a database for it. After successfully creating a database, you will have access to the following environment variables: DATABASE_URL, PGPORT, PGUSER, PGPASSWORD, PGDATABASE, PGHOST\\nYou can use these environment variables to connect to the database in your project.",
+      "parameters": {
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "check_database_status",
+      "description": "Check if given databases are available and accessible.\\nThis tool is used to verify the connection and status of specified databases.",
+      "parameters": {
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "str_replace_based_edit_tool",
+      "description": "Tool for viewing, creating and editing files* The `view` command supports the following cases:\\n  - Directories: Lists files and directories up to 2 levels deep, ignoring hidden items and node_modules\\n  - Image files (.jpg, .jpeg, or .png): Displays the image visually\\n  - Text files: Displays numbered lines. Lines are determined from Python's `.splitlines()` method, which recognizes all standard line breaks. If the file contains more than {max_resp_ln} characters, the output will be truncated.\\n* The `create` command creates or overwrites text files with the content specified in the `file_text` parameter.\\n* The `str_replace` command replaces text in a file. Requires an exact, unique match of `old_str` (whitespace sensitive). \\n  - Will fail if `old_str` doesn't exist or appears multiple times\\n  - Omitting `new_str` deletes the matched text\\n* The `insert` command inserts the text `insert_text` at the line `insert_line`.",
+      "parameters": {
+        "properties": {
+          "command": {
+            "description": "The operation to perform. Choose from: `view`, `create`, `str_replace`, or `insert`.",
+            "enum": ["view", "create", "str_replace", "insert"],
+            "type": "string"
+          },
+          "file_text": {
+            "description": "Required for `create` command. Contains the complete text content to write to the file.",
+            "type": "string"
+          },
+          "insert_line": {
+            "description": "Required parameter of `insert` command with line position for insertion: 0 places text at the beginning of the file, N places text after line N, and using the total number of lines in the file places text at the end. Lines in a file are determined using Python's `.splitlines()` method, which recognizes all standard line breaks.",
+            "type": "integer"
+          },
+          "insert_text": {
+            "description": "Required parameter of `insert` command, containing the text to insert. Must end with a newline character for the new text to appear on a separate line from any existing text that follows the insertion point.",
+            "type": "integer"
+          },
+          "new_str": {
+            "description": "Optional for `str_replace` command. The text that will replace `old_str`. If omitted, `old_str` will be deleted without replacement.",
+            "type": "string"
+          },
+          "old_str": {
+            "description": "Required parameter of `str_replace` command, with string to be replaced. Must be an EXACT and UNIQUE match in the file (be mindful of whitespaces). Tool will fail if multiple matches or no matches are found.",
+            "type": "string"
+          },
+          "path": {
+            "description": "Required parameter for all commands. Absolute path to file or directory, e.g. `/repo/file.py` or `/repo`.",
+            "type": "string"
+          },
+          "view_range": {
+            "description": "Optional parameter for the `view` command (text files only). Format: [start_line, end_line] where lines are indexed starting at 1. Use [start_line, -1] to view from start_line to the end of the file.",
+            "items": {"type": "integer"},
+            "type": "array"
+          }
+        },
+        "required": ["command", "path"],
+        "type": "object"
+      }
+    },
+    {
+      "name": "bash",
+      "description": "Run commands in a bash shell\\n* When invoking this tool, the contents of the \\\"command\\\" parameter does NOT need to be XML-escaped.\\n* You have access to a mirror of common linux and python packages via apt and pip.\\n* State is persistent across command calls and discussions with the user.\\n* To inspect a particular line range of a file, e.g. lines 10-25, try 'sed -n 10,25p /path/to/the/file'.\\n* Please avoid commands that may produce a very large amount of output.\\n* Please run long lived commands in the background, e.g. 'sleep 10 &' or start a server in the background.",
+      "parameters": {
+        "properties": {
+          "command": {
+            "description": "The bash command to run. Required unless the tool is being restarted.",
+            "type": "string"
+          },
+          "restart": {
+            "description": "Specifying true will restart this tool. Otherwise, leave this unspecified.",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "execute_sql_tool",
+      "description": "This tool allows you to execute SQL queries, fix database errors and access the database schema.\\n\\n## Rules of usage:\\n1. Always prefer using this tool to fix database errors vs fixing by writing code like db.drop_table(table_name)\\n2. Provide clear, well-formatted SQL queries with proper syntax\\n3. Focus on database interactions, data manipulation, and query optimization\\n\\n## When to use:\\n1. To fix and troubleshoot database-related issues\\n2. To explore database schema and relationships\\n3. To update or modify data in the database\\n4. To run ad-hoc single-use SQL code\\n\\n## When not to use:\\n1. For non-SQL database operations (NoSQL, file-based databases)\\n2. For database migrations. Use a migration tool like Drizzle or flask-migrate instead\\n\\n## Example usage:\\n\\n### Example 1: Viewing database information\\nsql_query: SELECT * FROM customers WHERE region = 'North';\\n\\n### Example 2: Running ad-hoc SQL queries\\nsql_query:  EXPLAIN ANALYZE SELECT orders.*, customers.name\\n            FROM orders\\n            JOIN customers ON orders.customer_id = customers.id;\\n\\n### Example 3: Inserting data into the database\\nsql_query:  INSERT INTO products (name, price, category)\\n            VALUES ('New Product', 29.99, 'Electronics');",
+      "parameters": {
+        "properties": {
+          "sql_query": {
+            "description": "The SQL query to be executed",
+            "type": "string"
+          }
+        },
+        "required": ["sql_query"],
+        "type": "object"
+      }
+    },
+    {
+      "name": "suggest_deploy",
+      "description": "Call this function when you think the project is in a state ready for deployment.\\nThis will suggest to the user that they can deploy their project.\\nThis is a terminal action - once called, your task is complete and\\nyou should not take any further actions to verify the deployment.\\nThe deployment process will be handled automatically by Replit Deployments.\\n\\n## Rules of usage:\\n1. Use this tool once you've validated that the project works as expected.\\n2. The deployment process will be handled automatically by Replit Deployments.\\n\\n## When to use:\\n1. When the project is ready for deployment.\\n2. When the user asks to deploy the project.\\n\\n## More information:\\n- The user needs to manually initiate the deployment.\\n- Replit Deployments will handle building the application, hosting, TLS, health checks.\\n- Once this tool is called, there is no need to do any follow up steps or verification.\\n- Once deployed, the app will be available under a `.replit.app` domain,\\n  or a custom domain if one is configured.",
+      "parameters": {
+        "description": "Empty parameters class since suggest deploy doesn't need any parameters.",
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "report_progress",
+      "description": "Call this function once the user explicitly confirms that a major feature or task is complete.\\nDo not call it without the user's confirmation.\\nProvide a concise summary of what was accomplished in the 'summary' field.\\nThis tool will ask user for the next thing to do. Don't do anything after this tool.",
+      "parameters": {
+        "properties": {
+          "summary": {
+            "description": "Summarize your recent changes in a maximum of 5 items. Be really concise, use no more than 30 words. Break things into multiple lines.\\nPut a ✓ before every item you've done recently and → for the items in progress, be very short and concise, don't use more than 50 words. Don't use emojis.\\nUse simple, everyday language that matches the user's language. Avoid technical terms, as users are non-technical.\\nAsk user what to do next in the end.",
+            "type": "string"
+          }
+        },
+        "required": ["summary"],
+        "type": "object"
+      }
+    }
+  ]
+}
