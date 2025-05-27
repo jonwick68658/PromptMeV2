@@ -82,7 +82,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/chat", async (req, res) => {
     try {
-      const { messages } = chatSchema.parse(req.body);
+      const { messages, platform } = chatSchema.parse(req.body);
       
       if (!process.env.OPENAI_API_KEY) {
         return res.status(500).json({ error: "Missing OpenAI API key" });
@@ -90,6 +90,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Add developer message with prompting guide
       const devMessage = { role: "developer", content: promptingGuide };
+      
+      // Get platform-specific context if platform is selected
+      let platformContext = "";
+      if (platform) {
+        const platformTemplate = platformTemplateService.getTemplate(platform);
+        if (platformTemplate) {
+          platformContext = `
+          
+# Platform-Specific Context for ${platformTemplate.name}
+You are creating prompts specifically for ${platformTemplate.name}. Use this platform information as context:
+
+## Platform Description
+${platformTemplate.description}
+
+## Platform System Prompt Style
+${platformTemplate.systemPrompt.substring(0, 1000)}...
+
+## Platform Tools/Capabilities
+${platformTemplate.tools ? JSON.stringify(platformTemplate.tools, null, 2).substring(0, 500) + '...' : 'No specific tools defined'}
+
+When generating prompts, ensure they match this platform's:
+- Communication style and terminology
+- Available tools and capabilities
+- Expected prompt format and structure
+- Best practices specific to this platform`;
+        }
+      }
       
       // Add system message to encourage interactive behavior and clarifying questions
       const systemMessage = { 
@@ -112,7 +139,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         - Always ask clarifying questions first rather than immediately generating a prompt
         - If the user's request is unclear or lacks context, always ask for more details
         - If user asks for changes to a prompt, ONLY modify the requested parts while keeping everything else intact
-        - Keep your explanations brief and your prompts clean and well-structured`
+        - Keep your explanations brief and your prompts clean and well-structured${platformContext}`
       };
       
       // Fix user/assistant role in the first message if needed

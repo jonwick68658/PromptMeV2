@@ -18,13 +18,16 @@ export default function Home() {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [clipboardFeedback, setClipboardFeedback] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>('');
+  const [platforms, setPlatforms] = useState<{id: string; name: string; description: string}[]>([]);
 
-  // Test platform templates loading
+  // Load platform templates
   useEffect(() => {
-    const testPlatforms = async () => {
+    const loadPlatforms = async () => {
       try {
         const response = await fetch('/api/platforms');
         const data = await response.json();
+        setPlatforms(data.platforms || []);
         console.log('Platform templates loaded:', data);
       } catch (error) {
         console.error('Failed to load platforms:', error);
@@ -32,7 +35,7 @@ export default function Home() {
     };
     
     if (emailCaptured) {
-      testPlatforms();
+      loadPlatforms();
     }
   }, [emailCaptured]);
 
@@ -60,8 +63,11 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      // Send message to API
-      const response = await apiRequest('POST', '/api/chat', { messages: newMessages });
+      // Send message to API with platform context
+      const response = await apiRequest('POST', '/api/chat', { 
+        messages: newMessages,
+        platform: selectedPlatform || undefined
+      });
       const data = await response.json();
       
       // Add AI response to chat

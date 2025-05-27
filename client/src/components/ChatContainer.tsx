@@ -9,6 +9,9 @@ interface ChatContainerProps {
   onSendMessage: (message: string) => void;
   onCopyPrompt: () => void;
   onClearChat: () => void;
+  selectedPlatform: string;
+  onPlatformChange: (platform: string) => void;
+  platforms: {id: string; name: string; description: string}[];
 }
 
 export default function ChatContainer({
@@ -16,7 +19,10 @@ export default function ChatContainer({
   isLoading,
   onSendMessage,
   onCopyPrompt,
-  onClearChat
+  onClearChat,
+  selectedPlatform,
+  onPlatformChange,
+  platforms
 }: ChatContainerProps) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
