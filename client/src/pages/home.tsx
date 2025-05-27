@@ -129,6 +129,9 @@ export default function Home() {
           onSendMessage={handleSendMessage}
           onCopyPrompt={handleCopyPrompt}
           onClearChat={handleClearChat}
+          selectedPlatform={selectedPlatform}
+          onPlatformChange={setSelectedPlatform}
+          platforms={platforms}
         />
         
         <Footer />

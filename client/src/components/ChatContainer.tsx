@@ -144,6 +144,27 @@ export default function ChatContainer({
       
       {/* Input Area */}
       <div className="border-t border-neutral-700 p-4">
+        {/* Platform Selection */}
+        {platforms.length > 0 && (
+          <div className="mb-3">
+            <label className="block text-sm font-medium text-neutral-300 mb-2">
+              Select AI Platform (optional)
+            </label>
+            <select
+              value={selectedPlatform}
+              onChange={(e) => onPlatformChange(e.target.value)}
+              className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white text-sm"
+            >
+              <option value="">Generic Prompt (no platform)</option>
+              {platforms.map((platform) => (
+                <option key={platform.id} value={platform.id}>
+                  {platform.name} - {platform.description}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
           <div className="relative">
             <textarea 
