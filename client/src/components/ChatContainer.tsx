@@ -155,7 +155,7 @@ export default function ChatContainer({
               onChange={(e) => onPlatformChange(e.target.value)}
               className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white text-sm"
             >
-              <option value="">Generic Prompt (no platform)</option>
+              <option value="">ChatGPT</option>
               {platforms.map((platform) => (
                 <option key={platform.id} value={platform.id}>
                   {platform.name} - {platform.description}
