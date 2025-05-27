@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { platformTemplateService } from "./platformTemplates";
 import { z } from "zod";
 import fetch from "node-fetch";
 import fs from "fs";
@@ -28,6 +29,20 @@ try {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize platform templates
+  await platformTemplateService.loadTemplates();
+
+  // Test endpoint to verify platform templates are loaded
+  app.get("/api/platforms", async (req, res) => {
+    try {
+      const platforms = platformTemplateService.getPlatformNames();
+      res.json({ platforms, count: platforms.length });
+    } catch (error) {
+      console.error("Error fetching platforms:", error);
+      res.status(500).json({ error: "Failed to fetch platforms" });
+    }
+  });
+
   // Validate email submission
   const emailSchema = z.object({
     email: z.string().email("Invalid email address"),

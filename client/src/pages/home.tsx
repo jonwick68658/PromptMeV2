@@ -19,6 +19,23 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [clipboardFeedback, setClipboardFeedback] = useState(false);
 
+  // Test platform templates loading
+  useEffect(() => {
+    const testPlatforms = async () => {
+      try {
+        const response = await fetch('/api/platforms');
+        const data = await response.json();
+        console.log('Platform templates loaded:', data);
+      } catch (error) {
+        console.error('Failed to load platforms:', error);
+      }
+    };
+    
+    if (emailCaptured) {
+      testPlatforms();
+    }
+  }, [emailCaptured]);
+
   const handleEmailSubmit = async (email: string) => {
     try {
       await apiRequest('POST', '/api/email', { email });
