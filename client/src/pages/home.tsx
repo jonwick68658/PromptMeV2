@@ -64,10 +64,11 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      // Send message to API with platform context
+      // Send message to API with platform context and selected model
       const response = await apiRequest('POST', '/api/chat', { 
         messages: newMessages,
-        platform: selectedPlatform || undefined
+        platform: selectedPlatform || undefined,
+        model: selectedModel
       });
       const data = await response.json();
       
