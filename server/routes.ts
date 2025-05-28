@@ -83,7 +83,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/chat", async (req, res) => {
     try {
-      const { messages, platform } = chatSchema.parse(req.body);
+      const { messages, platform, model } = chatSchema.parse(req.body);
       
       if (!process.env.OPENAI_API_KEY) {
         return res.status(500).json({ error: "Missing OpenAI API key" });
@@ -174,8 +174,11 @@ ${platformContext}`
         return msg;
       });
       
+      // Use selected model or default to gpt-4o
+      const selectedModel = model || "gpt-4o";
+      
       const payload = {
-        model: "o3-2025-04-16", 
+        model: selectedModel, // Support gpt-4o, gpt-4o-mini for cost comparison
         messages: [devMessage, systemMessage, ...fixedMessages].slice(-30), // Keep context trimmed
       };
       

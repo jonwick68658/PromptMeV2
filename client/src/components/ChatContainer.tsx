@@ -12,6 +12,8 @@ interface ChatContainerProps {
   selectedPlatform: string;
   onPlatformChange: (platform: string) => void;
   platforms: {id: string; name: string; description: string}[];
+  selectedModel: string;
+  onModelChange: (model: string) => void;
 }
 
 export default function ChatContainer({
@@ -22,7 +24,9 @@ export default function ChatContainer({
   onClearChat,
   selectedPlatform,
   onPlatformChange,
-  platforms
+  platforms,
+  selectedModel,
+  onModelChange
 }: ChatContainerProps) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
