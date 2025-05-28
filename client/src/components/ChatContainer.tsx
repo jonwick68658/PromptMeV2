@@ -148,16 +148,18 @@ export default function ChatContainer({
       
       {/* Input Area */}
       <div className="border-t border-neutral-700 p-4">
-        {/* Platform Selection */}
-        {platforms.length > 0 && (
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-neutral-300 mb-2">
-              Select AI Platform (optional)
-            </label>
-            <select
-              value={selectedPlatform}
-              onChange={(e) => onPlatformChange(e.target.value)}
-              className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white text-sm"
+        {/* Platform and Model Selection */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          {/* Platform Selection */}
+          {platforms.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">
+                Select AI Platform (optional)
+              </label>
+              <select
+                value={selectedPlatform}
+                onChange={(e) => onPlatformChange(e.target.value)}
+                className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white text-sm"
             >
               <option value="">ChatGPT</option>
               {platforms.map((platform) => (
@@ -165,9 +167,25 @@ export default function ChatContainer({
                   {platform.name} - {platform.description}
                 </option>
               ))}
+              </select>
+            </div>
+          )}
+          
+          {/* Model Selection */}
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-2">
+              Model <span className="text-xs text-neutral-400">(4.1-mini much cheaper)</span>
+            </label>
+            <select
+              value={selectedModel}
+              onChange={(e) => onModelChange(e.target.value)}
+              className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white text-sm"
+            >
+              <option value="gpt-4o">GPT-4o (Best Quality)</option>
+              <option value="gpt-4.1-mini-2025-04-14">GPT-4.1-mini (Much Cheaper)</option>
             </select>
           </div>
-        )}
+        </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
           <div className="relative">
