@@ -40,6 +40,20 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
+  // Initialize Telegram bot if token is available
+  let telegramBot: TelegramBotService | null = null;
+  if (process.env.TELEGRAM_BOT_TOKEN) {
+    try {
+      telegramBot = new TelegramBotService();
+      await telegramBot.start();
+    } catch (error) {
+      console.error('Failed to start Telegram bot:', error);
+      log('Telegram bot disabled - continuing without bot functionality');
+    }
+  } else {
+    log('TELEGRAM_BOT_TOKEN not found - Telegram bot disabled');
+  }
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
@@ -67,5 +81,17 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    if (telegramBot) {
+      log('🤖 Telegram bot is active and ready!');
+    }
+  });
+
+  // Graceful shutdown
+  process.on('SIGINT', () => {
+    log('Shutting down gracefully...');
+    if (telegramBot) {
+      telegramBot.stop();
+    }
+    process.exit(0);
   });
 })();
