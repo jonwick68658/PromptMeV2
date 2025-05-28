@@ -6,21 +6,23 @@ An intelligent prompt engineering toolkit that helps users create precise and ef
 
 ### 🌐 Web Application
 - **Interactive Chat Interface** - Clean, dark-themed UI for prompt generation
-- **15 AI Platform Templates** - Specialized prompts for different AI tools:
-  - Bolt.new - Web development with artifact formatting
-  - Cursor - AI-powered code editing and pair programming
-  - Replit - Full-stack development environment
-  - Claude 3.7 Sonnet - Advanced reasoning and analysis
-  - Google Gemini 2.5 Pro - Search-integrated AI responses
-  - Perplexity AI - Research with proper citations
-  - Devin - Software engineering with planning modes
-  - Cline - Skilled software engineer with XML tools
-  - Lovable - React/TypeScript web application editor
+- **17 AI Platform Templates** - Specialized prompts for different AI tools:
+  - **GPT-4.1** - Complete ChatGPT mobile experience with Canvas, web search, image generation
+  - **Claude 4** - Authentic Claude Sonnet 4 with web search and thinking mode
+  - **Bolt.new** - Web development with artifact formatting
+  - **Cursor** - AI-powered code editing and pair programming
+  - **Replit** - Full-stack development environment
+  - **Claude 3.7 Sonnet** - Advanced reasoning and analysis
+  - **Google Gemini 2.5 Pro** - Search-integrated AI responses
+  - **Perplexity AI** - Research with proper citations
+  - **Devin** - Software engineering with planning modes
+  - **Cline** - Skilled software engineer with XML tools
+  - **Lovable** - React/TypeScript web application editor
   - And 6 more specialized platforms
 
 ### 📱 Telegram Bot Integration
 - **Mobile-First Access** - Generate prompts directly from Telegram
-- **Platform Selection** - All 15 templates available via bot commands
+- **Platform Selection** - All 17 templates available via bot commands
 - **Real-time Generation** - Fast prompt creation on mobile devices
 - **Commands Available**:
   - `/start` - Welcome and instructions
@@ -32,6 +34,10 @@ An intelligent prompt engineering toolkit that helps users create precise and ef
 - **gpt-4.1-mini-2025-04-14** - Proven quality at significantly lower cost
 - **Smart Context Management** - Efficient token usage
 - **Platform-Native Generation** - Authentic prompts that work perfectly with each AI tool
+
+### 🎯 Latest Platform Additions
+- **GPT-4.1 Template** - Complete ChatGPT mobile experience with Canvas tool, web search, image generation, Python execution, and adaptive conversation style
+- **Claude 4 Template** - Authentic Claude Sonnet 4 with web search capabilities, thinking mode, natural conversation style, and current context awareness
 
 ### 🎯 Advanced Prompt Engineering
 - **Interactive Approach** - Asks clarifying questions before generating
