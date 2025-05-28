@@ -174,8 +174,8 @@ ${platformContext}`
         return msg;
       });
       
-      // Use selected model or default to gpt-4o
-      const selectedModel = model || "gpt-4o";
+      // Use gpt-4.1-mini-2025-04-14 for all users - proven to deliver excellent quality at much lower cost
+      const selectedModel = "gpt-4.1-mini-2025-04-14";
       
       const payload = {
         model: selectedModel, // Support gpt-4o, gpt-4o-mini for cost comparison

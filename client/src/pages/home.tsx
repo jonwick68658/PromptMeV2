@@ -19,7 +19,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [clipboardFeedback, setClipboardFeedback] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
-  const [selectedModel, setSelectedModel] = useState<string>('gpt-4o');
   const [platforms, setPlatforms] = useState<{id: string; name: string; description: string}[]>([]);
 
   // Load platform templates
@@ -64,11 +63,10 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      // Send message to API with platform context and selected model
+      // Send message to API with platform context
       const response = await apiRequest('POST', '/api/chat', { 
         messages: newMessages,
-        platform: selectedPlatform || undefined,
-        model: selectedModel
+        platform: selectedPlatform || undefined
       });
       const data = await response.json();
       
@@ -134,8 +132,6 @@ export default function Home() {
           selectedPlatform={selectedPlatform}
           onPlatformChange={setSelectedPlatform}
           platforms={platforms}
-          selectedModel={selectedModel}
-          onModelChange={setSelectedModel}
         />
         
         <Footer />
