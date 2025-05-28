@@ -78,6 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       })
     ),
     platform: z.string().optional(),
+    model: z.string().optional(),
   });
 
   app.post("/api/chat", async (req, res) => {
